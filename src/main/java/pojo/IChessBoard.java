@@ -38,4 +38,9 @@ public interface IChessBoard {
      * @return list result of the allowed moves for each piece on the chess board.
      */
     public List<String> calculateMoves();
+
+    /**
+     * reset remove all pieces from the chess board
+     */
+    public void reset();
 }

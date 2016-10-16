@@ -56,16 +56,32 @@ public class ChessBoard implements IChessBoard{
     public List<String> calculateMoves() {
         List<String> ret = new ArrayList<String>();
         for(Map.Entry chessPieceEntry:getPieces().entrySet()){
+            IChessPiece chessPiece = (IChessPiece) chessPieceEntry.getValue();
+            //White P on f7: [e8, f8]
             StringBuilder sb = new StringBuilder();
+            if(chessPiece.getColor()=="W") sb.append("White ");
+            if(chessPiece.getColor()=="B") sb.append("Black ");
+            sb.append(chessPiece.getType());
+            sb.append(" on ").append(mappingFromInternal(chessPiece.getPosition().x,
+                    chessPiece.getPosition().y)).append(": ");
+
             List<Point> list = ((IChessPiece) chessPieceEntry.getValue()).calculateNextMove(this);
             List<String> mappedList = new ArrayList<String>();
             for(Point p:list){
                 mappedList.add(mappingFromInternal(p.x, p.y));
             }
-            sb.append(StringUtils.join(mappedList.toArray(),','));
+            sb.append("[").append(StringUtils.join(mappedList.toArray(), ',')).append("]");
             ret.add(sb.toString());
         }
         return ret;
+    }
+
+    /**
+     * reset remove all pieces from the chess board
+     */
+    @Override
+    public void reset() {
+        getPieces().clear();
     }
 
 
@@ -85,7 +101,7 @@ public class ChessBoard implements IChessBoard{
      * @param y internal y axis coordinate
      * @return String of the position representation
      */
-    protected final static String mappingFromInternal(int x, int y){
+    public final static String mappingFromInternal(int x, int y){
         StringBuilder sb = new StringBuilder();
         sb.append((char)(x+97));
         sb.append(String.valueOf(y + 1));
@@ -97,7 +113,7 @@ public class ChessBoard implements IChessBoard{
      * @param xy the String representation of the position
      * @return internal Point
      */
-    protected final static Point mappingToInternal(String xy){
+    public final static Point mappingToInternal(String xy){
         char[] chars = xy.toCharArray();
         int x,y;
         if(chars.length<2) throw new IllegalArgumentException("Failed to parse the position");

@@ -1,5 +1,7 @@
 package pojo.impl.piece;
 
+import exception.InitialPositionOccupiedException;
+import jdk.Exported;
 import org.easymock.EasyMock;
 import org.junit.Test;
 import pojo.IChessBoard;
@@ -34,6 +36,15 @@ public class AbstractPieceTest {
         protected List<Point> findAllPossibleMoves(IChessBoard iChessBoard) {
             return null;
         }
+
+        public Point getPosition() {
+            return super.getPosition();
+        }
+
+        @Override
+        public String getType() {
+            return null;
+        }
     };
 
     private IChessBoard iChessBoard = EasyMock.createMock(IChessBoard.class);
@@ -57,7 +68,7 @@ public class AbstractPieceTest {
         assertTrue(abstractPieceAnywhereInitSameCaptureAsMovement.place(iChessBoard));
     }
 
-    @Test
+    @Test(expected = InitialPositionOccupiedException.class)
     public void testPlace() throws Exception {
         TestHelper.initEmptyChessBoard(iChessBoard);
         abstractPieceAnywhereInitSameCaptureAsMovement.setColor("B");
@@ -66,7 +77,6 @@ public class AbstractPieceTest {
 
         abstractPieceAnywhereInitSameCaptureAsMovement.setColor("B");
         abstractPieceAnywhereInitSameCaptureAsMovement.setPosition(new Point(11, 1));
-        assertFalse("Out of board test", abstractPieceAnywhereInitSameCaptureAsMovement.place(iChessBoard));
-
+        abstractPieceAnywhereInitSameCaptureAsMovement.place(iChessBoard);
     }
 }

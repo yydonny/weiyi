@@ -34,4 +34,10 @@ public interface IChessPiece {
      * @return the color of the piece, i.e. W or B
      */
     public String getColor();
+
+
+    /**
+     * @return type of the piece
+     */
+    public String getType();
 }

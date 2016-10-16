@@ -11,6 +11,7 @@ import pojo.IChessPiece;
 import pojo.impl.ChessBoard;
 import util.TestHelper;
 
+import javax.naming.ldap.InitialLdapContext;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -54,7 +55,7 @@ public class BishopTest {
                     }},bishop.calculateNextMove(iChessBoard));
     }
 
-    @Test
+    @Test(expected = InitialPositionOccupiedException.class)
     public void testSettingPiecePositionAfterPlace() throws Exception {
         TestHelper.initEmptyChessBoard(iChessBoard);
 
@@ -62,7 +63,7 @@ public class BishopTest {
         assertTrue("in board test",bishop.place(iChessBoard));
 
         bishop = new Bishop("W", new Point(19,1));
-        assertFalse("Out of board test",bishop.place(iChessBoard));
+        bishop.place(iChessBoard);
     }
 
     @Test(expected = InitialPositionOccupiedException.class)

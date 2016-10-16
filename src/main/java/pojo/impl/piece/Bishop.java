@@ -59,4 +59,12 @@ public class Bishop extends AbstractPiece {
             {1,1},
             {-1,1}
     };
+
+    /**
+     * @return type of the piece
+     */
+    @Override
+    public String getType() {
+        return "B";
+    }
 }

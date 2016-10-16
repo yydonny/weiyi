@@ -82,9 +82,11 @@ public abstract class AbstractPiece implements IChessPiece{
         if (Helper.inBound(position,boundary))
         {
             if(iChessBoard.getPieceAt(position)==null)return true && isInitialPositionLegal();
-            else throw new InitialPositionOccupiedException();
+            else throw new InitialPositionOccupiedException("Initial position already occupied");
         }
-        else return false;
+        else {
+            throw new InitialPositionOccupiedException("Initial position is out of boundary");
+         }
     }
 
     protected abstract boolean isInitialPositionLegal();
