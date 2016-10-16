@@ -54,12 +54,36 @@ public abstract class AbstractPiece implements IChessPiece{
             else{
                 ret.add(possibleMove.getLocation());
             }
-            //3. if capture is different from movement, move to one capture
-            if(!capturedSameAsMovement()){
-                //TODO
-            }
-            //4.continue 1 until no more position
+
+            //3.continue 1 until no more position
         }
+
+        //1 if capture is different from movement, move to one capture
+        if(!capturedSameAsMovement()){
+            moves = findAllPossibleMoves(iChessBoard);
+            for(Point possibleMove:moves)
+            {
+                //2.check if occupied, if occupied check if same color and if yes, back 1; no add to list
+                //if not occupied, add to list
+                IChessPiece existingPiece = iChessBoard.getPieceAt(possibleMove);
+                if(existingPiece!=null)
+                {
+                    if(existingPiece.getColor()==this.getColor()){
+                        //occupied by same color
+                        continue;
+                    }else{//is captured same as move
+                        ret.add(possibleMove.getLocation());//capture existing piece
+                    }
+                }//existingPiece==null
+                else{
+                    continue;//can't move here as no piece exsits
+                }
+
+                //2.continue 1 until no more position
+            }
+        }
+
+
 
         return ret;
     };
@@ -92,6 +116,10 @@ public abstract class AbstractPiece implements IChessPiece{
     protected abstract boolean isInitialPositionLegal();
     protected abstract boolean capturedSameAsMovement();
     protected abstract List<Point> findAllPossibleMoves(IChessBoard iChessBoard);
+
+    protected List<Point> findPossibleCaptureMoves(){
+        throw new UnsupportedOperationException();
+    }
 
     public AbstractPiece(String color, Point position) {
         this.color = color;

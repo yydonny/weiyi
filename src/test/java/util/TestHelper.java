@@ -31,7 +31,12 @@ public class TestHelper {
         EasyMock.expect(iChessBoard.getPieceAt(EasyMock.anyObject())).andReturn(null).anyTimes();
         EasyMock.replay(iChessBoard);
     }
-
+    public static void initEmptyChessBoard(IChessBoard iChessBoard, Point bound){
+        EasyMock.reset(iChessBoard);
+        EasyMock.expect(iChessBoard.getBoundary()).andReturn(bound).anyTimes();
+        EasyMock.expect(iChessBoard.getPieceAt(EasyMock.anyObject())).andReturn(null).anyTimes();
+        EasyMock.replay(iChessBoard);
+    }
     public static void initChessBoardWithExistingPieces(IChessBoard iChessBoard,
                                                         Point bound,
                                                         int getBoundaryCallTimes,
