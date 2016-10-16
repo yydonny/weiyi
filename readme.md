@@ -44,6 +44,26 @@ Sample input and output:
     White P on h6: [g7]
     Black P on h7: []
 
+   ---------------------------------
+     a   b   c   d   e   f   g   h
+ 8 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 7 |   |   |   |   |   |   | P | P |
+   ---------------------------------
+ 6 |   |   |   |   |   |   |   | p |
+   ---------------------------------
+ 5 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 4 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 3 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 2 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 1 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+     a   b   c   d   e   f   g   h
+
     Continue (Y/N)?: Y
 
     Enter number of pieces: 3
@@ -74,7 +94,25 @@ Sample input and output:
     White P on f7: [e8, f8]
     Black N on e8: [c7, d6, f6]
     Black P on g7: [g5, g6]
-
+   ---------------------------------
+     a   b   c   d   e   f   g   h
+ 8 |   |   |   |   | N |   |   |   |
+   ---------------------------------
+ 7 |   |   |   |   |   | P | P |   |
+   ---------------------------------
+ 6 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 5 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 4 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 3 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 2 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 1 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+     a   b   c   d   e   f   g   h
     Continue (Y/N)?: Y
 
     Enter number of pieces: 3
@@ -98,11 +136,54 @@ Sample input and output:
     White B on c2: [a4, b1, b3, d1, d3]
     Black P on d3: [c2, d2]
     Black N on b4: [a2, a6, c2, c6, d5]
-
+   ---------------------------------
+     a   b   c   d   e   f   g   h
+ 8 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 7 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 6 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 5 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 4 |   | N |   |   |   |   |   |   |
+   ---------------------------------
+ 3 |   |   |   | P |   |   |   |   |
+   ---------------------------------
+ 2 |   |   | b |   |   |   |   |   |
+   ---------------------------------
+ 1 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+     a   b   c   d   e   f   g   h
     Continue (Y/N)?: N
 
 
 
+
+
+
+
+
+High-level design:
+(1) Input nomberOfPiece
+(2) for(nomberOfPiece)
+ (2.1) Input(color,type,position)
+ (2.2) check validity if wrong then Output and re-input at (2.1)
+      else work out allowed position and stored result
+(3) continue to (1) if required
+
+
+Some trick points:
+1. need check out of board for all type of pieces,
+we may use brute force plus boundary check
+2. there is a global state for each group of input,
+i.e., sequence does matter in terms of initial position,
+however, once all pieces are in place, then input sequence
+dose not matter as long as the resulting initial locations
+are the same.
+3. possible position = normal movement (same color will block movement)
+ and capture movement (only different color can be captured), not only depends on
+, and constrained to chessboard boundary
 
 
 
