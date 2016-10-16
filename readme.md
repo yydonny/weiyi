@@ -187,15 +187,19 @@ are the same.
 
 Class design:
 1. chessboard class
-   boundary, location mapping (a2) <--> (1,2)
    LinkedHashMap<position, piece> //state of initial positions
-2. chess piece (color, position, rules)
-   -place(Chessboard), -move(Chessboard)
-
-3. chessManager
    place chess
    work out possible positions
    reset chessboard
+   boundary, location mapping (a2) <--> (1,2)
+
+2. chess piece (color, position)
+   -place(Chessboard, position), -move(Chessboard)
+
+3. chessManager
+   chessboard.place
+   chessboard.calculate
+   chessboard.reset
 
 4. console (input ->  call chessManager
 ->output
