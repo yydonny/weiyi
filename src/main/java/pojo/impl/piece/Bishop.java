@@ -41,12 +41,12 @@ public class Bishop extends AbstractPiece {
                 {
                     if(existingPiece.getColor()==this.getColor()){
                         //occupied by same color
-                        break;
+                        continue;
                     }else{//is captured same as move
                         if(capturedSameAsMovement()){
                             ret.add(possibleMove.getLocation());
                         }else{
-                            break;
+                            continue;
                         }
                     }
                 }//existingPiece==null

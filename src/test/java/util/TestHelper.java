@@ -1,9 +1,13 @@
 package util;
 
 import org.easymock.EasyMock;
+import org.easymock.IAnswer;
 import pojo.IChessBoard;
+import pojo.IChessPiece;
 
 import java.awt.*;
+import java.util.*;
+import java.util.List;
 
 /**
  * <p>This is a
@@ -26,5 +30,28 @@ public class TestHelper {
         EasyMock.expect(iChessBoard.getBoundary()).andReturn(bound).times(getBoundaryCallTimes);
         EasyMock.expect(iChessBoard.getPieceAt(EasyMock.anyObject())).andReturn(null).anyTimes();
         EasyMock.replay(iChessBoard);
+    }
+
+    public static void initChessBoardWithExistingPieces(IChessBoard iChessBoard,
+                                                        Point bound,
+                                                        int getBoundaryCallTimes,
+                                                        IChessPiece... existingPieces){
+        Map<Point,IChessPiece> existingPieceList = new LinkedHashMap<Point,IChessPiece>(){{
+        for(IChessPiece piece:existingPieces){
+            put(piece.getPosition(), piece);
+        }
+        }};
+
+
+        EasyMock.reset(iChessBoard);
+        EasyMock.expect(iChessBoard.getBoundary()).andReturn(bound).times(getBoundaryCallTimes);
+        EasyMock.expect(iChessBoard.getPieceAt(EasyMock.anyObject())).andAnswer(new IAnswer<IChessPiece>()
+        {
+            public IChessPiece answer() throws Throwable {
+                return existingPieceList.get((EasyMock.getCurrentArguments()[0]));
+            }
+        }).anyTimes();
+        EasyMock.replay(iChessBoard);
+
     }
 }

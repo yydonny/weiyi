@@ -1,5 +1,6 @@
 package pojo.impl.piece;
 
+import exception.InitialPositionOccupiedException;
 import pojo.IChessBoard;
 import pojo.IChessPiece;
 import util.Helper;
@@ -27,6 +28,8 @@ public abstract class AbstractPiece implements IChessPiece{
 
     /**
      * This method should always be called in child class to check the boundary constraint
+     * Plus, this method will also check if the position has already been occupied so that
+     * exception of illegal initial position will be thrown
      * @param iChessBoard chessboard it is placed
      * @param position position to be placed
      * @return true when position is legal
@@ -38,7 +41,10 @@ public abstract class AbstractPiece implements IChessPiece{
             throw new IllegalArgumentException("color must be W or B");
         Point boundary = iChessBoard.getBoundary();
         if (Helper.inBound(position,boundary))
-            return true;
+        {
+            if(iChessBoard.getPieceAt(position)==null)return true;
+            else throw new InitialPositionOccupiedException();
+        }
         else return false;
     }
 

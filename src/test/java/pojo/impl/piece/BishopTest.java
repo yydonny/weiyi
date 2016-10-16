@@ -1,5 +1,6 @@
 package pojo.impl.piece;
 
+import exception.InitialPositionOccupiedException;
 import org.easymock.EasyMock;
 import org.junit.After;
 import org.junit.Before;
@@ -67,5 +68,35 @@ public class BishopTest {
         assertEquals("null position is set",bishop.getPosition(),null);
         assertEquals("null color is set",bishop.getColor(),null);
 
+    }
+
+    @Test(expected = InitialPositionOccupiedException.class)
+    public void testCalculateNextMoveWithInitialOccupiedPieceInChessBoard() throws Exception {
+        Bishop __existingPiece = new Bishop();
+        __existingPiece.setPosition(new Point(3,3));
+        TestHelper.initChessBoardWithExistingPieces(iChessBoard, new Point(3, 3), 3, __existingPiece);
+
+        bishop = new Bishop();
+        bishop.place(iChessBoard,new Point(3,3),"W");
+
+    }
+
+    @Test
+    public void testCalculateNextMoveWithBlockingPieceInChessBoard() throws Exception {
+        Bishop __existingPiece = new Bishop();
+        __existingPiece.setPosition(new Point(3,3));
+        __existingPiece.setColor("W");
+        TestHelper.initChessBoardWithExistingPieces(iChessBoard, new Point(3, 3), 3, __existingPiece);
+
+        bishop = new Bishop();
+        bishop.place(iChessBoard,new Point(2,2),"W");
+
+        assertEquals(
+                new ArrayList<Point>(){{
+                    add(new Point(1,1));
+                    add(new Point(0,0));
+                    add(new Point(3,1));
+                    add(new Point(1,3));
+                }},bishop.calculateNextMove(iChessBoard));
     }
 }
