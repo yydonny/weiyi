@@ -2,6 +2,7 @@ package pojo.impl.piece;
 
 import pojo.IChessBoard;
 import pojo.IChessPiece;
+import util.Helper;
 
 import java.awt.*;
 import java.util.*;
@@ -34,10 +35,7 @@ public abstract class AbstractPiece implements IChessPiece{
         if (iChessBoard == null || position == null)
             throw new IllegalArgumentException("iChessBoard pr position can not be null");
         Point boundary = iChessBoard.getBoundary();
-        if (boundary.getX() >= position.getX()
-                && 0 <= position.getX()
-                && boundary.getY() >= position.getY()
-                && 0 <= position.getY())
+        if (Helper.inBound(position,boundary))
             return true;
         else return false;
     }
