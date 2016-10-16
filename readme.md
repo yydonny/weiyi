@@ -165,8 +165,8 @@ Sample input and output:
 
 
 High-level design:
-(1) Input nomberOfPiece
-(2) for(nomberOfPiece)
+(1) Input numberOfPiece
+(2) for(numberOfPiece)
  (2.1) Input(color,type,position)
  (2.2) check validity if wrong then Output and re-input at (2.1)
       else work out allowed position and stored result
@@ -183,7 +183,21 @@ dose not matter as long as the resulting initial locations
 are the same.
 3. possible position = normal movement (same color will block movement)
  and capture movement (only different color can be captured), not only depends on
-, and constrained to chessboard boundary
+, and constrained to chessboard boundary and type constraint
 
+Class design:
+1. chessboard class
+   boundary, location mapping (a2) <--> (1,2)
+   LinkedHashMap<position, piece> //state of initial positions
+2. chess piece (color, position, rules)
+   -place(Chessboard), -move(Chessboard)
+
+3. chessManager
+   place chess
+   work out possible positions
+   reset chessboard
+
+4. console (input ->  call chessManager
+->output
 
 
