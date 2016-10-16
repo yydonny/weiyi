@@ -33,6 +33,15 @@ public class ChessBoard implements IChessBoard{
         return boundary;
     }
 
+    /**
+     * @param position the position of the piece in the chess board
+     * @return IChessPiece instance for the existing piece, or else null
+     */
+    @Override
+    public IChessPiece getPieceAt(Point position) {
+        return null;
+    }
+
     @Override
     public List<String> play() {
         return null;

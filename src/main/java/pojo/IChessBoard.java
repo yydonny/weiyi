@@ -28,5 +28,12 @@ public interface IChessBoard {
      */
     public Point getBoundary();
 
+
+    /**
+     * @param position the position of the piece in the chess board
+     * @return IChessPiece instance for the existing piece, or else null
+     */
+    public IChessPiece getPieceAt(Point position);
+
     public List<String> play();
 }

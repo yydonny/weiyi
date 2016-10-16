@@ -4,11 +4,14 @@ import org.easymock.EasyMock;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.ui.context.Theme;
 import pojo.IChessBoard;
 import pojo.IChessPiece;
 import pojo.impl.ChessBoard;
+import util.TestHelper;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
@@ -35,23 +38,34 @@ public class BishopTest {
     }
 
     @Test
-    public void testCalculateNextMove() throws Exception {
+    public void testCalculateNextMoveInEmptyChessBoard() throws Exception {
+        TestHelper.initEmptyChessBoard(iChessBoard,new Point(3,3), 3);
+        bishop = new Bishop();
+        bishop.place(iChessBoard,new Point(2,2),"W");
 
+        assertEquals(
+                new ArrayList<Point>(){{
+                    add(new Point(1,1));
+                    add(new Point(0,0));
+                    add(new Point(3,1));
+                    add(new Point(3,3));
+                    add(new Point(1,3));
+                    }},bishop.calculateNextMove(iChessBoard));
     }
 
     @Test
     public void testSettingPiecePositionAfterPlace() throws Exception {
-        EasyMock.reset(iChessBoard);
-        EasyMock.expect(iChessBoard.getBoundary()).andReturn(new Point(10,10)).times(2);
-        EasyMock.replay(iChessBoard);
+        TestHelper.initEmptyChessBoard(iChessBoard);
 
         bishop = new Bishop();
-        assertTrue("in board test",bishop.place(iChessBoard, new Point(0, 0)));
+        assertTrue("in board test",bishop.place(iChessBoard, new Point(0, 0),"W"));
         assertEquals("correctly set position",bishop.getPosition(),new Point(0,0));
+        assertEquals("correctly set position",bishop.getColor(),"W");
 
         bishop = new Bishop();
-        assertFalse("Out of board test",bishop.place(iChessBoard, new Point(19,1)));
+        assertFalse("Out of board test",bishop.place(iChessBoard, new Point(19,1),"W"));
         assertEquals("null position is set",bishop.getPosition(),null);
+        assertEquals("null color is set",bishop.getColor(),null);
 
     }
 }
