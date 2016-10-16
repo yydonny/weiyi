@@ -63,6 +63,6 @@ public class Knight extends AbstractPiece {
      */
     @Override
     public String getType() {
-        return "K";
+        return "N";
     }
 }

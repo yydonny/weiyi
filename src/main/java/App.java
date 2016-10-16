@@ -23,12 +23,12 @@ public class App {
 
     public static void main(String[] args) throws Exception {
         Proxy proxy = new Console();
-        int n = Integer.valueOf(proxy.readNumberOfPieces());
-        System.out.println(n);
 
         IChessBoard chessBoard = new ChessBoard();
 
         do {
+            int n = Integer.valueOf(proxy.readNumberOfPieces());
+
             chessBoard.reset();
             for (int i = 1; i < n + 1; i++) {
                 try {

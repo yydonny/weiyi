@@ -59,8 +59,8 @@ public class ChessBoard implements IChessBoard{
             IChessPiece chessPiece = (IChessPiece) chessPieceEntry.getValue();
             //White P on f7: [e8, f8]
             StringBuilder sb = new StringBuilder();
-            if(chessPiece.getColor()=="W") sb.append("White ");
-            if(chessPiece.getColor()=="B") sb.append("Black ");
+            if(chessPiece.getColor().equals("W")) sb.append("White ");
+            if(chessPiece.getColor().equals("B")) sb.append("Black ");
             sb.append(chessPiece.getType());
             sb.append(" on ").append(mappingFromInternal(chessPiece.getPosition().x,
                     chessPiece.getPosition().y)).append(": ");
@@ -96,7 +96,7 @@ public class ChessBoard implements IChessBoard{
 
 
     /**
-     * e.g. (x,y) = (1,1) -> "b2"
+     * e.g. (x,y) = (1,1) is mapped to "b2"
      * @param x internal x-axis coordinate
      * @param y internal y axis coordinate
      * @return String of the position representation
@@ -109,7 +109,7 @@ public class ChessBoard implements IChessBoard{
     }
 
     /**
-     * e.g. "b2" -> (x,y) = (1,1)
+     * e.g. "b2" is mapped to  (x,y) = (1,1)
      * @param xy the String representation of the position
      * @return internal Point
      */
