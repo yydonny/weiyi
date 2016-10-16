@@ -4,6 +4,8 @@ import org.springframework.stereotype.Component;
 import pojo.IChessPiece;
 import pojo.impl.ChessBoard;
 import pojo.impl.piece.Bishop;
+import pojo.impl.piece.Knight;
+import pojo.impl.piece.Pawn;
 import ui.Proxy;
 
 import java.util.List;
@@ -43,7 +45,11 @@ public class Console implements Proxy {
                 case "B":
                     ret = new Bishop(color, ChessBoard.mappingToInternal(position));
                     break;
-                case "K":
+                case "N":
+                    ret = new Knight(color, ChessBoard.mappingToInternal(position));
+                    break;
+                case "P":
+                    ret = new Pawn(color, ChessBoard.mappingToInternal(position));
                     break;
                 default: ret = null;
             }

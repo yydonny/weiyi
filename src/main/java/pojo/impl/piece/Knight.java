@@ -1,12 +1,10 @@
 package pojo.impl.piece;
 
 import pojo.IChessBoard;
-import pojo.IChessPiece;
 import util.Helper;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -16,14 +14,14 @@ import java.util.List;
  * @author Will Li
  *         Created by Will Li on 10/16/2016.
  */
-public class Bishop extends AbstractPiece {
+public class Knight extends AbstractPiece {
 
     @Override
     protected boolean isInitialPositionLegal() {
         return true;
     }
 
-    public Bishop(String color, Point position) {
+    public Knight(String color, Point position) {
         super(color, position);
     }
 
@@ -31,10 +29,10 @@ public class Bishop extends AbstractPiece {
         List<Point> ret = new ArrayList<Point>();
         Point bound = iChessBoard.getBoundary();
         //this.getPosition()-->List<Point>
-        for(int[] direction:Bishop.directions)
+        for(int[] direction: Knight.directions)
         {   boolean outOfBound = false;
             int steps = 1; // how many steps in this direction to be checked
-            while(!outOfBound)
+            while(!outOfBound && steps <= 1)
             {
                 Point nextPosition =  new Point(
                         (int)getPosition().getX()+direction[0] * steps,
@@ -54,10 +52,10 @@ public class Bishop extends AbstractPiece {
 
     //four moving directions of bishop
     private static final int[][] directions = {
-            {-1,-1},
-            {1,-1},
-            {1,1},
-            {-1,1}
+            {-2,-1},{-1,-2},
+            {2,-1},{-1,2},
+            {2,1},{1,2},
+            {-2,1},{1,-2}
     };
 
     /**
@@ -65,6 +63,6 @@ public class Bishop extends AbstractPiece {
      */
     @Override
     public String getType() {
-        return "B";
+        return "K";
     }
 }
