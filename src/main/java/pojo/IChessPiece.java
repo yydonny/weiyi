@@ -15,19 +15,25 @@ public interface IChessPiece {
      * @param iChessBoard chessboard it is placed
      * @return possible position for next move
      */
-    public List<String> calculateNextMove(IChessBoard iChessBoard);
+    public List<Point> calculateNextMove(IChessBoard iChessBoard);
 
 
     /**
      * @param iChessBoard chessboard it is placed
      * @param position position to be placed
+     * @param color       color of the piece
      * @return true when position is legal
      */
-    public boolean place(IChessBoard iChessBoard, Point position);
+    public boolean place(IChessBoard iChessBoard, Point position, String color);
 
 
     /**
      * @return position of this piece
      */
     public Point getPosition();
+
+    /**
+     * @return the color of the piece, i.e. W or B
+     */
+    public String getColor();
 }

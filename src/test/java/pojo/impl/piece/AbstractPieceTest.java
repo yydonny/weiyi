@@ -1,5 +1,6 @@
 package pojo.impl.piece;
 
+import jdk.Exported;
 import org.easymock.EasyMock;
 import org.easymock.Mock;
 import org.junit.After;
@@ -7,6 +8,8 @@ import org.junit.Before;
 import org.junit.Test;
 import pojo.IChessBoard;
 import pojo.impl.ChessBoard;
+import util.Helper;
+import util.TestHelper;
 
 import java.awt.*;
 import java.util.*;
@@ -25,7 +28,7 @@ public class AbstractPieceTest {
 
     private AbstractPiece abstractPiece = new AbstractPiece() {
         @Override
-        public List<String> calculateNextMove(IChessBoard iChessBoard) {
+        public List<Point> calculateNextMove(IChessBoard iChessBoard) {
             return null;
         }
     };
@@ -33,14 +36,30 @@ public class AbstractPieceTest {
     private IChessBoard iChessBoard = EasyMock.createMock(IChessBoard.class);
 
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testPlaceWithWrongColor() throws Exception {
+        TestHelper.initEmptyChessBoard(iChessBoard);
+        assertTrue(abstractPiece.place(iChessBoard, new Point(0, 0),"B1"));
+}
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testPlaceWithNullColor() throws Exception {
+        TestHelper.initEmptyChessBoard(iChessBoard);
+        assertTrue(abstractPiece.place(iChessBoard, new Point(0, 0),null));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testPlaceWithNullPosition() throws Exception {
+        TestHelper.initEmptyChessBoard(iChessBoard);
+        assertTrue(abstractPiece.place(iChessBoard, null, "B"));
+    }
+
     @Test
     public void testPlace() throws Exception {
-        EasyMock.reset(iChessBoard);
-        EasyMock.expect(iChessBoard.getBoundary()).andReturn(new Point(10,10)).times(2);
-        EasyMock.replay(iChessBoard);
+        TestHelper.initEmptyChessBoard(iChessBoard);
 
-        assertTrue("in board test",abstractPiece.place(iChessBoard, new Point(0, 0)));
-        assertFalse("Out of board test",abstractPiece.place(iChessBoard, new Point(11,1)));
+        assertTrue("in board test", abstractPiece.place(iChessBoard, new Point(0, 0), "B"));
+        assertFalse("Out of board test",abstractPiece.place(iChessBoard, new Point(11,1),"B"));
 
     }
 }

@@ -22,7 +22,7 @@ public abstract class AbstractPiece implements IChessPiece{
      * @return possible position for next move
      */
     @Override
-    public abstract List<String> calculateNextMove(IChessBoard iChessBoard);
+    public abstract List<Point> calculateNextMove(IChessBoard iChessBoard);
 
 
     /**
@@ -31,9 +31,11 @@ public abstract class AbstractPiece implements IChessPiece{
      * @param position position to be placed
      * @return true when position is legal
      */
-    public boolean place(IChessBoard iChessBoard, Point position) {
-        if (iChessBoard == null || position == null)
+    public boolean place(IChessBoard iChessBoard, Point position, String color) {
+        if (iChessBoard == null || position == null || color == null)
             throw new IllegalArgumentException("iChessBoard pr position can not be null");
+        if( (color!=null) && ! (color.equals("W") || color.equals("B") ))
+            throw new IllegalArgumentException("color must be W or B");
         Point boundary = iChessBoard.getBoundary();
         if (Helper.inBound(position,boundary))
             return true;
@@ -42,6 +44,7 @@ public abstract class AbstractPiece implements IChessPiece{
 
     private Point position;
 
+    private String color;
     /**
      * Gets position
      *
@@ -55,5 +58,17 @@ public abstract class AbstractPiece implements IChessPiece{
         this.position = position;
     }
 
+    /**
+     * Gets color
+     *
+     * @return value of color
+     */
+    @Override
+    public String getColor() {
+        return color;
+    }
 
+    protected void setColor(String color) {
+        this.color = color;
+    }
 }
