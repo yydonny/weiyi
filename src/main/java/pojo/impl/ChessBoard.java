@@ -1,9 +1,11 @@
 package pojo.impl;
 
+import org.apache.commons.lang3.StringUtils;
 import pojo.IChessBoard;
 import pojo.IChessPiece;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,8 +53,19 @@ public class ChessBoard implements IChessBoard{
     }
 
     @Override
-    public List<String> play() {
-        return null;
+    public List<String> calculateMoves() {
+        List<String> ret = new ArrayList<String>();
+        for(Map.Entry chessPieceEntry:getPieces().entrySet()){
+            StringBuilder sb = new StringBuilder();
+            List<Point> list = ((IChessPiece) chessPieceEntry.getValue()).calculateNextMove(this);
+            List<String> mappedList = new ArrayList<String>();
+            for(Point p:list){
+                mappedList.add(mappingFromInternal(p.x, p.y));
+            }
+            sb.append(StringUtils.join(mappedList.toArray(),','));
+            ret.add(sb.toString());
+        }
+        return ret;
     }
 
 
@@ -65,8 +78,35 @@ public class ChessBoard implements IChessBoard{
         return pieces;
     }
 
+
+    /**
+     * e.g. (x,y) = (1,1) -> "b2"
+     * @param x internal x-axis coordinate
+     * @param y internal y axis coordinate
+     * @return String of the position representation
+     */
+    protected final static String mappingFromInternal(int x, int y){
+        StringBuilder sb = new StringBuilder();
+        sb.append((char)(x+97));
+        sb.append(String.valueOf(y + 1));
+        return sb.toString();
+    }
+
+    /**
+     * e.g. "b2" -> (x,y) = (1,1)
+     * @param xy the String representation of the position
+     * @return internal Point
+     */
+    protected final static Point mappingToInternal(String xy){
+        char[] chars = xy.toCharArray();
+        int x,y;
+        if(chars.length<2) throw new IllegalArgumentException("Failed to parse the position");
+        return new Point(chars[0]-97,Integer.valueOf(String.valueOf(chars[1]))-1);
+    }
+
     final private Point boundary = new Point(7,7);
 
+    //LinkedHashMap to retain the input order
     private Map<Point, IChessPiece> pieces = new LinkedHashMap<Point, IChessPiece>();
 
 

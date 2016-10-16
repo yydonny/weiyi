@@ -34,5 +34,8 @@ public interface IChessBoard {
      */
     public IChessPiece getPieceAt(Point position);
 
-    public List<String> play();
+    /**
+     * @return list result of the allowed moves for each piece on the chess board.
+     */
+    public List<String> calculateMoves();
 }
