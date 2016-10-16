@@ -34,7 +34,7 @@ public abstract class AbstractPiece implements IChessPiece{
      * @param position position to be placed
      * @return true when position is legal
      */
-    public boolean place(IChessBoard iChessBoard, Point position, String color) {
+    public boolean place(IChessBoard iChessBoard) {
         if (iChessBoard == null || position == null || color == null)
             throw new IllegalArgumentException("iChessBoard pr position can not be null");
         if( (color!=null) && ! (color.equals("W") || color.equals("B") ))
@@ -47,6 +47,12 @@ public abstract class AbstractPiece implements IChessPiece{
         }
         else return false;
     }
+
+    public AbstractPiece(String color, Point position) {
+        this.color = color;
+        this.position = position;
+    }
+
 
     private Point position;
 

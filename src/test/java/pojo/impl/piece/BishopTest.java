@@ -41,8 +41,8 @@ public class BishopTest {
     @Test
     public void testCalculateNextMoveInEmptyChessBoard() throws Exception {
         TestHelper.initEmptyChessBoard(iChessBoard,new Point(3,3), 3);
-        bishop = new Bishop();
-        bishop.place(iChessBoard,new Point(2,2),"W");
+        bishop = new Bishop("W",new Point(2,2));
+        bishop.place(iChessBoard);
 
         assertEquals(
                 new ArrayList<Point>(){{
@@ -58,44 +58,61 @@ public class BishopTest {
     public void testSettingPiecePositionAfterPlace() throws Exception {
         TestHelper.initEmptyChessBoard(iChessBoard);
 
-        bishop = new Bishop();
-        assertTrue("in board test",bishop.place(iChessBoard, new Point(0, 0),"W"));
-        assertEquals("correctly set position",bishop.getPosition(),new Point(0,0));
-        assertEquals("correctly set position",bishop.getColor(),"W");
+        bishop = new Bishop("W", new Point(0, 0));
+        assertTrue("in board test",bishop.place(iChessBoard));
 
-        bishop = new Bishop();
-        assertFalse("Out of board test",bishop.place(iChessBoard, new Point(19,1),"W"));
-        assertEquals("null position is set",bishop.getPosition(),null);
-        assertEquals("null color is set",bishop.getColor(),null);
-
+        bishop = new Bishop("W", new Point(19,1));
+        assertFalse("Out of board test",bishop.place(iChessBoard));
     }
 
     @Test(expected = InitialPositionOccupiedException.class)
     public void testCalculateNextMoveWithInitialOccupiedPieceInChessBoard() throws Exception {
-        Bishop __existingPiece = new Bishop();
-        __existingPiece.setPosition(new Point(3,3));
+        Bishop __existingPiece = new Bishop("W",new Point(3,3));
         TestHelper.initChessBoardWithExistingPieces(iChessBoard, new Point(3, 3), 3, __existingPiece);
 
-        bishop = new Bishop();
-        bishop.place(iChessBoard,new Point(3,3),"W");
+        bishop = new Bishop("W",new Point(3,3));
+        bishop.place(iChessBoard);
 
     }
 
     @Test
     public void testCalculateNextMoveWithBlockingPieceInChessBoard() throws Exception {
-        Bishop __existingPiece = new Bishop();
-        __existingPiece.setPosition(new Point(3,3));
-        __existingPiece.setColor("W");
+        Bishop __existingPiece = new Bishop("W",new Point(3,3));
+
         TestHelper.initChessBoardWithExistingPieces(iChessBoard, new Point(3, 3), 3, __existingPiece);
 
-        bishop = new Bishop();
-        bishop.place(iChessBoard,new Point(2,2),"W");
+        bishop = new Bishop("W",new Point(2,2));
+        bishop.place(iChessBoard);
 
         assertEquals(
                 new ArrayList<Point>(){{
                     add(new Point(1,1));
                     add(new Point(0,0));
                     add(new Point(3,1));
+                    add(new Point(1,3));
+                }},bishop.calculateNextMove(iChessBoard));
+    }
+
+    @Test
+    public void testCalculateNextMoveWithCaptureablePieceInChessBoard() throws Exception {
+        Bishop __existingPiece = new Bishop("B",new Point(3,3));
+
+
+        Bishop __existingPiece1 = new Bishop("B",new Point(0,0));
+
+
+        TestHelper.initChessBoardWithExistingPieces(iChessBoard, new Point(3, 3), 3,
+                __existingPiece,__existingPiece1);
+
+        bishop = new Bishop("W",new Point(2,2));
+        bishop.place(iChessBoard);
+
+        assertEquals(
+                new ArrayList<Point>(){{
+                    add(new Point(1,1));
+                    add(new Point(0,0));
+                    add(new Point(3,1));
+                    add(new Point(3,3));
                     add(new Point(1,3));
                 }},bishop.calculateNextMove(iChessBoard));
     }

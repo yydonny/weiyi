@@ -20,11 +20,9 @@ public interface IChessPiece {
 
     /**
      * @param iChessBoard chessboard it is placed
-     * @param position position to be placed
-     * @param color       color of the piece
      * @return true when position is legal
      */
-    public boolean place(IChessBoard iChessBoard, Point position, String color);
+    public boolean place(IChessBoard iChessBoard);
 
 
     /**

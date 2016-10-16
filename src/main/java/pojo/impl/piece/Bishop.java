@@ -33,8 +33,7 @@ public class Bishop extends AbstractPiece {
         //1.move to one position
         for(Point possibleMove:moves)
         {
-            {
-                //3.check if occupied, if occupied check if same color and if yes, back 1; no add to list
+                //2.check if occupied, if occupied check if same color and if yes, back 1; no add to list
                 //if not occupied, add to list
                 IChessPiece existingPiece = iChessBoard.getPieceAt(possibleMove);
                 if(existingPiece!=null)
@@ -53,34 +52,35 @@ public class Bishop extends AbstractPiece {
                 else{
                     ret.add(possibleMove.getLocation());
                 }
-            }
+            //3. if capture is different from movement, move to one capture
+            if(!capturedSameAsMovement()){
+                //TODO
+                    }
+            //4.continue 1 until no more position
         }
-
-        //4.continue 1 until no more position
-        //5. if capture is different from movement, move to one capture
-        //repeat 2.3.4
-
 
         return ret;
     }
 
 
     /**
-     * Bishop does not have constraint apart from as long as in the chess board
+     * Bishop does not have constraint apart from as long as in the chess board,
+     * it will NOT add the piece into the chess board if no issue as adding a piece is
+     * left to ChessBoard to do.
      * @param iChessBoard chessboard it is placed
-     * @param position    position to be placed
-     * @param color       color of the piece
      * @return true when position is legal
      */
     @Override
-    public boolean place(IChessBoard iChessBoard, Point position, String color) {
-        if(super.place(iChessBoard,position,color))
+    public boolean place(IChessBoard iChessBoard) {
+        if(super.place(iChessBoard))
         {
-            setPosition(position);
-            setColor(color);
             return true;
         }
         else return false;
+    }
+
+    public Bishop(String color, Point position) {
+        super(color, position);
     }
 
     private List<Point> findAllPossibleMoves(IChessBoard iChessBoard){

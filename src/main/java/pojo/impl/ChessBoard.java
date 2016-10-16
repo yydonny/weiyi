@@ -4,7 +4,9 @@ import pojo.IChessBoard;
 import pojo.IChessPiece;
 
 import java.awt.*;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>This is a IChessBoard implementation
@@ -20,8 +22,14 @@ public class ChessBoard implements IChessBoard{
      */
     @Override
     public boolean place(IChessPiece iChessPiece) {
+        if(iChessPiece.place(this))
+        {
+            getPieces().put(iChessPiece.getPosition(),iChessPiece);
+            return true;
+        };
         return false;
     }
+
 
     /**
      * @return the maximum coordinate of the chess board
@@ -39,7 +47,7 @@ public class ChessBoard implements IChessBoard{
      */
     @Override
     public IChessPiece getPieceAt(Point position) {
-        return null;
+        return getPieces().get(position);
     }
 
     @Override
@@ -48,5 +56,18 @@ public class ChessBoard implements IChessBoard{
     }
 
 
+    /**
+     * Gets pieces
+     *
+     * @return value of pieces
+     */
+    private Map<Point, IChessPiece> getPieces() {
+        return pieces;
+    }
+
     final private Point boundary = new Point(7,7);
+
+    private Map<Point, IChessPiece> pieces = new LinkedHashMap<Point, IChessPiece>();
+
+
 }

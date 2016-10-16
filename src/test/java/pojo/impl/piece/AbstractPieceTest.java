@@ -26,7 +26,7 @@ import static org.junit.Assert.*;
  */
 public class AbstractPieceTest {
 
-    private AbstractPiece abstractPiece = new AbstractPiece() {
+    private AbstractPiece abstractPiece = new AbstractPiece(null,null) {
         @Override
         public List<Point> calculateNextMove(IChessBoard iChessBoard) {
             return null;
@@ -39,27 +39,31 @@ public class AbstractPieceTest {
     @Test(expected = IllegalArgumentException.class)
     public void testPlaceWithWrongColor() throws Exception {
         TestHelper.initEmptyChessBoard(iChessBoard);
-        assertTrue(abstractPiece.place(iChessBoard, new Point(0, 0),"B1"));
+        assertTrue(abstractPiece.place(iChessBoard));
 }
 
     @Test(expected = IllegalArgumentException.class)
     public void testPlaceWithNullColor() throws Exception {
         TestHelper.initEmptyChessBoard(iChessBoard);
-        assertTrue(abstractPiece.place(iChessBoard, new Point(0, 0),null));
+        assertTrue(abstractPiece.place(iChessBoard));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testPlaceWithNullPosition() throws Exception {
         TestHelper.initEmptyChessBoard(iChessBoard);
-        assertTrue(abstractPiece.place(iChessBoard, null, "B"));
+        assertTrue(abstractPiece.place(iChessBoard));
     }
 
     @Test
     public void testPlace() throws Exception {
         TestHelper.initEmptyChessBoard(iChessBoard);
+        abstractPiece.setColor( "B");
+        abstractPiece.setPosition(new Point(0, 0));
+        assertTrue("in board test", abstractPiece.place(iChessBoard));
 
-        assertTrue("in board test", abstractPiece.place(iChessBoard, new Point(0, 0), "B"));
-        assertFalse("Out of board test",abstractPiece.place(iChessBoard, new Point(11,1),"B"));
+        abstractPiece.setColor( "B");
+        abstractPiece.setPosition(new Point(11, 1));
+        assertFalse("Out of board test",abstractPiece.place(iChessBoard));
 
     }
 }

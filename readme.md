@@ -184,6 +184,8 @@ are the same.
 3. possible position = normal movement (same color will block movement)
  and capture movement (only different color can be captured), not only depends on
 , and constrained to chessboard boundary and type constraint
+4. it is assumed that initial piece position can not occupy/capture spot where another piece
+already has been placed.
 
 Class design:
 1. chessboard class
