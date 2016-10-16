@@ -26,8 +26,8 @@ public class Pawn extends AbstractPiece {
         super(color, position);
     }
 
-    protected List<Point> findAllPossibleMoves(IChessBoard iChessBoard){
-        List<Point> ret = new ArrayList<Point>();
+    protected List<List<Point>> findAllPossibleMoves(IChessBoard iChessBoard){
+        List<List<Point>> ret = new ArrayList<List<Point>>();
         Point bound = iChessBoard.getBoundary();
         //this.getPosition()-->List<Point>
         for(int[] direction: Pawn.directions)
@@ -40,6 +40,38 @@ public class Pawn extends AbstractPiece {
             if(getColor().equals("B")&& getPosition().y>5) maxSteps = 2;
             if(getColor().equals("W")&& getPosition().y<2) maxSteps = 2;
 
+            List<Point> innerRet = new ArrayList<Point>();
+            while(!outOfBound && steps<=maxSteps)
+            {
+                Point nextPosition =  new Point(
+                        (int)getPosition().getX()+direction[0] * steps * multiplier,
+                        (int)getPosition().getY()+direction[1] * steps * multiplier
+                );
+                //check if in boundary
+                if(Helper.inBound(nextPosition,bound)) innerRet.add(nextPosition);
+                    else outOfBound = true;//go for next direction of the move
+                steps++;
+            }
+            if(innerRet.size()>0)ret.add(innerRet);
+            else innerRet = null;
+        }
+        return ret;
+    }
+
+    @Override
+    protected boolean capturedSameAsMovement(){return false;}
+
+    @Override
+    protected List<Point> findPossibleCaptureMoves(IChessBoard iChessBoard) {
+        List<Point> ret = new ArrayList<Point>();
+        Point bound = iChessBoard.getBoundary();
+        for(int[] direction: Pawn.captureDirections)
+        {   boolean outOfBound = false;
+            int steps = 1; // how many steps in this direction to be checked
+            int multiplier = 1;//sign for different colored pawn
+            if(getColor().equals("B"))  multiplier = -1;
+            int maxSteps = 1;
+
             while(!outOfBound && steps<=maxSteps)
             {
                 Point nextPosition =  new Point(
@@ -48,21 +80,22 @@ public class Pawn extends AbstractPiece {
                 );
                 //check if in boundary
                 if(Helper.inBound(nextPosition,bound)) ret.add(nextPosition);
-                    else outOfBound = true;//go for next direction of the move
+                else outOfBound = true;//go for next direction of the move
                 steps++;
             }
         }
         return ret;
     }
 
-    @Override
-    protected boolean capturedSameAsMovement(){return false;}
-
     //one moving directions of pawn
     private static final int[][] directions = {
             {0,1}
     };
 
+    //capture directions
+    private static final int[][] captureDirections = {
+            {-1,1},{1,1}
+    };
     /**
      * @return type of the piece
      */

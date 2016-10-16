@@ -106,14 +106,26 @@ public class PawnTest {
                 new ArrayList<Point>() {{
 
                 }}, pawn.calculateNextMove(iChessBoard));
+
+        __existingPiece = new Pawn("W",new Point(7,5));
+
+        TestHelper.initChessBoardWithExistingPieces(iChessBoard, new Point(7, 7), 4, __existingPiece);
+
+        pawn = new Pawn("B",new Point(7,6));
+        pawn.place(iChessBoard);
+
+        assertEquals(
+                new ArrayList<Point>() {{
+
+                }}, pawn.calculateNextMove(iChessBoard));
     }
 
     @Test
     public void testCalculateNextMoveWithCaptureablePieceInChessBoard() throws Exception {
-        Pawn __existingPiece = new Pawn("W",new Point(2,3));
+        Pawn __existingPiece = new Pawn("W",new Point(2,2));
 
 
-        Pawn __existingPiece1 = new Pawn("B",new Point(2,2));
+        Pawn __existingPiece1 = new Pawn("B",new Point(1,2));
 
 
         TestHelper.initChessBoardWithExistingPieces(iChessBoard, new Point(7, 7), 4,
@@ -124,7 +136,7 @@ public class PawnTest {
 
         assertEquals(
                 new ArrayList<Point>() {{
-                    add(new Point(2, 2));
+                    add(new Point(1, 2));
                     }}, pawn.calculateNextMove(iChessBoard));
     }
 }

@@ -27,13 +27,14 @@ public class Bishop extends AbstractPiece {
         super(color, position);
     }
 
-    protected List<Point> findAllPossibleMoves(IChessBoard iChessBoard){
-        List<Point> ret = new ArrayList<Point>();
+    protected List<List<Point>> findAllPossibleMoves(IChessBoard iChessBoard){
+        List<List<Point>> ret = new ArrayList<List<Point>>();
         Point bound = iChessBoard.getBoundary();
         //this.getPosition()-->List<Point>
         for(int[] direction:Bishop.directions)
         {   boolean outOfBound = false;
             int steps = 1; // how many steps in this direction to be checked
+            List<Point> innerRet = new ArrayList<Point>();
             while(!outOfBound)
             {
                 Point nextPosition =  new Point(
@@ -41,10 +42,12 @@ public class Bishop extends AbstractPiece {
                         (int)getPosition().getY()+direction[1] * steps
                 );
                 //check if in boundary
-                if(Helper.inBound(nextPosition,bound)) ret.add(nextPosition);
+                if(Helper.inBound(nextPosition,bound)) innerRet.add(nextPosition);
                     else outOfBound = true;//go for next direction of the move
                 steps++;
             }
+            if(innerRet.size()>0)ret.add(innerRet);
+            else innerRet = null;
         }
         return ret;
     }

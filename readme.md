@@ -1,5 +1,58 @@
 This is a Maven project.
 
+How to run:
+java -jar ??.jar
+
+
+
+
+
+High-level design:
+(1) Input numberOfPiece
+(2) for(numberOfPiece)
+ (2.1) Input(color,type,position)
+ (2.2) check validity if wrong then Output and re-input at (2.1)
+      else work out allowed position and stored result
+(3) continue to (1) if required
+
+
+Some trick points:
+1. need check out of board for all type of pieces,
+we may use brute force plus boundary check
+2. there is a global state for each group of input,
+i.e., sequence does matter in terms of initial position,
+however, once all pieces are in place, then input sequence
+dose not matter as long as the resulting initial locations
+are the same.
+3. possible position = normal movement (same color will block movement)
+ and capture movement (only different color can be captured), not only depends on
+, and constrained to chessboard boundary and type constraint
+4. it is assumed that initial piece position can not occupy/capture spot where another piece
+already has been placed.
+
+Class design:
+1. chessboard class
+   LinkedHashMap<position, piece> //state of initial positions
+   place chess
+   work out possible positions
+   reset chessboard
+   boundary, location mapping (a2) <--> (1,2)
+
+2. chess piece (color, position)
+   -place(Chessboard, position), -move(Chessboard)
+
+3. chessManager
+   chessboard.place
+   chessboard.calculate
+   chessboard.reset
+
+4. console (input ->  call chessManager
+->output
+
+
+
+
+
 Sample input and output:
 
  > FindValidMoves
@@ -177,52 +230,5 @@ Sample input and output:
     Continue (Y/N)?: N
 
 
-
-
-
-
-
-
-High-level design:
-(1) Input numberOfPiece
-(2) for(numberOfPiece)
- (2.1) Input(color,type,position)
- (2.2) check validity if wrong then Output and re-input at (2.1)
-      else work out allowed position and stored result
-(3) continue to (1) if required
-
-
-Some trick points:
-1. need check out of board for all type of pieces,
-we may use brute force plus boundary check
-2. there is a global state for each group of input,
-i.e., sequence does matter in terms of initial position,
-however, once all pieces are in place, then input sequence
-dose not matter as long as the resulting initial locations
-are the same.
-3. possible position = normal movement (same color will block movement)
- and capture movement (only different color can be captured), not only depends on
-, and constrained to chessboard boundary and type constraint
-4. it is assumed that initial piece position can not occupy/capture spot where another piece
-already has been placed.
-
-Class design:
-1. chessboard class
-   LinkedHashMap<position, piece> //state of initial positions
-   place chess
-   work out possible positions
-   reset chessboard
-   boundary, location mapping (a2) <--> (1,2)
-
-2. chess piece (color, position)
-   -place(Chessboard, position), -move(Chessboard)
-
-3. chessManager
-   chessboard.place
-   chessboard.calculate
-   chessboard.reset
-
-4. console (input ->  call chessManager
-->output
 
 

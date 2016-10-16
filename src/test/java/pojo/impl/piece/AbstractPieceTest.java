@@ -33,7 +33,7 @@ public class AbstractPieceTest {
         }
 
         @Override
-        protected List<Point> findAllPossibleMoves(IChessBoard iChessBoard) {
+        protected List<List<Point>> findAllPossibleMoves(IChessBoard iChessBoard) {
             return null;
         }
 

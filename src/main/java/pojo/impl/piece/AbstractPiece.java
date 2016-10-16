@@ -28,12 +28,13 @@ public abstract class AbstractPiece implements IChessPiece{
     @Override
     public final List<Point> calculateNextMove(IChessBoard iChessBoard){
         //move while checking blocking, and capture
-        List<Point> moves = findAllPossibleMoves(iChessBoard);
+        List<List<Point>> moves = findAllPossibleMoves(iChessBoard);
 
         List<Point> ret = new ArrayList<Point>();
         Point bound = iChessBoard.getBoundary();
-        //1.move to one position
-        for(Point possibleMove:moves)
+        //1.move to one direction
+        for(List<Point> di:moves)
+            for(Point possibleMove:di)
         {
             //2.check if occupied, if occupied check if same color and if yes, back 1; no add to list
             //if not occupied, add to list
@@ -41,13 +42,14 @@ public abstract class AbstractPiece implements IChessPiece{
             if(existingPiece!=null)
             {
                 if(existingPiece.getColor()==this.getColor()){
-                    //occupied by same color
-                    continue;
+                    //occupied by same color, i.e. blocked
+                    break;
                 }else{//is captured same as move
                     if(capturedSameAsMovement()){
                         ret.add(possibleMove.getLocation());
-                    }else{
-                        continue;
+                        break;//if captured, no further movement should be made
+                    }else{//opposite color exists but can't capture, then blocked
+                        break;
                     }
                 }
             }//existingPiece==null
@@ -60,8 +62,8 @@ public abstract class AbstractPiece implements IChessPiece{
 
         //1 if capture is different from movement, move to one capture
         if(!capturedSameAsMovement()){
-            moves = findAllPossibleMoves(iChessBoard);
-            for(Point possibleMove:moves)
+            List<Point> catpureMoves = findPossibleCaptureMoves(iChessBoard);
+            for(Point possibleMove:catpureMoves)
             {
                 //2.check if occupied, if occupied check if same color and if yes, back 1; no add to list
                 //if not occupied, add to list
@@ -115,9 +117,9 @@ public abstract class AbstractPiece implements IChessPiece{
 
     protected abstract boolean isInitialPositionLegal();
     protected abstract boolean capturedSameAsMovement();
-    protected abstract List<Point> findAllPossibleMoves(IChessBoard iChessBoard);
+    protected abstract List<List<Point>> findAllPossibleMoves(IChessBoard iChessBoard);
 
-    protected List<Point> findPossibleCaptureMoves(){
+    protected List<Point> findPossibleCaptureMoves(IChessBoard iChessBoard){
         throw new UnsupportedOperationException();
     }
 
