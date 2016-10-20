@@ -1,0 +1,370 @@
+
+---------------------------
+
+(Please read this file using a fixed-width font, otherwise the diagrams will not be displayed correctly.)
+
+A chessboard comprises a 8x8 grid.  Squares on the board are notated using a letter and a number, where the letter indicates the column (or "file") and the number indicates the row (or "rank").  a1 is located in the bottom left corner, and h8 in the top right:
+
+   ---------------------------------
+ 8 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 7 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 6 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 5 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 4 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 3 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 2 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 1 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+     a   b   c   d   e   f   g   h
+
+Chess pieces are of one of two colours: white and black.  There are six different types of chess pieces: kings, queens, rooks, bishops, knights and pawns.  Different chess pieces move in different ways.  For instance, the knight (notated as "N") moves in an "L" shape: two squares in one direction, and then one square perpendicular to that.  So a knight located on d5 can move to the following squares marked "n":
+
+   ---------------------------------
+ 8 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 7 |   |   | n |   | n |   |   |   |
+   ---------------------------------
+ 6 |   | n |   |   |   | n |   |   |
+   ---------------------------------
+ 5 |   |   |   | N |   |   |   |   |
+   ---------------------------------
+ 4 |   | n |   |   |   | n |   |   |
+   ---------------------------------
+ 3 |   |   | n |   | n |   |   |   |
+   ---------------------------------
+ 2 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 1 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+     a   b   c   d   e   f   g   h
+
+The valid target squares for the knight on d5 is given by the set [b4, b6, c3, c7, e3, e7, f4, f6].
+
+The bishop (notated as "B") can only move diagonally.  So a bishop located on e3 can move to the squares marked with a "b":
+
+   ---------------------------------
+ 8 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 7 | b |   |   |   |   |   |   |   |
+   ---------------------------------
+ 6 |   | b |   |   |   |   |   | b |
+   ---------------------------------
+ 5 |   |   | b |   |   |   | b |   |
+   ---------------------------------
+ 4 |   |   |   | b |   | b |   |   |
+   ---------------------------------
+ 3 |   |   |   |   | B |   |   |   |
+   ---------------------------------
+ 2 |   |   |   | b |   | b |   |   |
+   ---------------------------------
+ 1 |   |   | b |   |   |   | b |   |
+   ---------------------------------
+     a   b   c   d   e   f   g   h
+
+The valid target squares for the bishop on e3 is given by the set [a7, b6, c1, c5, d2, d4, f2, f4, g1, g5, h6].
+
+The pawn (notated as "P") can only move forward.  By convention, the white pieces are initially set up on the bottom of the board and the black pieces at the top of the board.  So white pawns move "up" the board and black pawns move "down" the board.  Pawns also have special rules regarding placement and movement.  Pawns normally move one square forward at a time.  However, pawns occupying their initial position have the choice of moving one square forward or two.  White pawns start on the second rank, and black pawns start on the seventh rank.
+
+So a white pawn located on e2 can move to either of the following squares marked "p":
+
+   ---------------------------------
+ 8 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 7 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 6 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 5 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 4 |   |   |   |   | p |   |   |   |
+   ---------------------------------
+ 3 |   |   |   |   | p |   |   |   |
+   ---------------------------------
+ 2 |   |   |   |   | P |   |   |   |
+   ---------------------------------
+ 1 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+     a   b   c   d   e   f   g   h
+
+The valid target squares for the white pawn on e2 is given by the set [e3, e4].  It has the option of moving one square forward or two because it is in its initial position on the second rank (being a white pawn).
+
+A black pawn located on c7 can move to either of the following squares marked "p":
+
+   ---------------------------------
+ 8 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 7 |   |   | P |   |   |   |   |   |
+   ---------------------------------
+ 6 |   |   | p |   |   |   |   |   |
+   ---------------------------------
+ 5 |   |   | p |   |   |   |   |   |
+   ---------------------------------
+ 4 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 3 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 2 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 1 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+     a   b   c   d   e   f   g   h
+
+The valid target squares for the black pawn on c7 is given by the set [c5. c6].  It has the option of moving one square forward or two because it is in its initial position on the seventh rank (being a black pawn).
+
+A white pawn located on b6 can move to the following square marked "p":
+
+   ---------------------------------
+ 8 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 7 |   | p |   |   |   |   |   |   |
+   ---------------------------------
+ 6 |   | P |   |   |   |   |   |   |
+   ---------------------------------
+ 5 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 4 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 3 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 2 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 1 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+     a   b   c   d   e   f   g   h
+
+The valid target squares for the white pawn on b6 is given by the set [b7].  It does not have the option of moving two squares forward because it is not in its initial position (it is a white pawn not on the second rank).
+
+A black pawn located on f2 can move to the following square marked "p":
+
+   ---------------------------------
+ 8 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 7 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 6 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 5 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 4 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 3 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 2 |   |   |   |   |   | P |   |   |
+   ---------------------------------
+ 1 |   |   |   |   |   | p |   |   |
+   ---------------------------------
+     a   b   c   d   e   f   g   h
+
+The valid target squares for the black pawn on f2 is given by the set [f1].  It does not have the option of moving two squares forward because it is not in its initial position (it is a black pawn not on the seventh rank).
+
+No two pieces can simultaneously occupy the same square.  If a piece of one colour moves to a square occupied by a piece of the other colour, then it is said to have "captured" the piece on the target square, and the existing piece is removed from the board.  This is a legal move.  A piece, however, may not capture a piece of the same colour, so a move to a square occupied by a piece of the same colour is illegal.
+
+Knights capture in the same manner in which they move.  The white knight located on h4 may capture the black pawn located on f5:
+
+   ---------------------------------
+ 8 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 7 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 6 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 5 |   |   |   |   |   | P |   |   |
+   ---------------------------------
+ 4 |   |   |   |   |   |   |   | N |
+   ---------------------------------
+ 3 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 2 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 1 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+     a   b   c   d   e   f   g   h
+
+The valid target squares for the white knight on h4 is given by the set [f3, f5, g2, g6].  Note that if the pawn on f5 was instead a white piece, then the knight would not be able to move to f5, since that square is already occupied by a piece of the same colour.
+
+Bishops also capture in the same manner in which they move.  The white bishop located on c1 may capture the black knight located on f4:
+
+   ---------------------------------
+ 8 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 7 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 6 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 5 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 4 |   |   |   |   |   | N |   |   |
+   ---------------------------------
+ 3 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 2 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 1 |   |   | B |   |   |   |   |   |
+   ---------------------------------
+     a   b   c   d   e   f   g   h
+
+The valid target squares for the white bishop on c1 is given by the set [a3, b2, d2, e3, f4].  Note that if the knight on ff was instead a white piece, then the bishop would not be able to move to f4, since that square is already occupied by a piece of the same colour.
+
+Pawns capture in a different manner to which they move.  While their normal movement is forward, their capturing movement is one square forward ("up" for white and "down" for black) and one square to the left or right.  So a black pawn located on e5 may capture the white knight on f4:
+
+   ---------------------------------
+ 8 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 7 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 6 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 5 |   |   |   |   | P |   |   |   |
+   ---------------------------------
+ 4 |   |   |   |   |   | N |   |   |
+   ---------------------------------
+ 3 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 2 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 1 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+     a   b   c   d   e   f   g   h
+
+The valid target squares for the black pawn on e5 is given by the set [e4, f4], since it may move to e4 or capture the white piece on f4.  Note that if the knight on f4 was instead a black piece, then the pawn would not be able to capture it.  Additionally, if there were piece on e4 of either colour, then the pawn would not be able to move to that square, since it may only capture on the diagonal squares in front of it.
+
+Pawns may not move "through" a piece, so if a pawn is blocked by a piece in front of it, then it may not move further along that file.  Bishops also may not move through a piece.  This constraint does not apply to knights, which are allowed to "jump" over pieces in between it and the target square.  So given the following setup with a white pawn on d2, a white knight on d3 and a white bishop on b1, the knight can move to the squares marked "n", the bishop can move to the squares marked "b", while the pawn has no valid moves:
+
+   ---------------------------------
+ 8 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 7 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 6 |   |   |   |   |   |   |   |   |
+   ---------------------------------
+ 5 |   |   | n |   | n |   |   |   |
+   ---------------------------------
+ 4 |   | n |   |   |   | n |   |   |
+   ---------------------------------
+ 3 |   |   |   | N |   |   |   |   |
+   ---------------------------------
+ 2 | b | n | b | P |   | n |   |   |
+   ---------------------------------
+ 1 |   | B | n |   | n |   |   |   |
+   ---------------------------------
+     a   b   c   d   e   f   g   h
+
+When setting up a position, knights may be placed on any square on the board, but pawns may not be placed on the first or last ranks (i.e. they can only be placed on ranks 2-7).
+
+Given these rules, write a program that will output the set of valid target squares for one or more knights, bishops and pawns given an initial setup.  The program must have a console interface that prompts the user for information related to the initial board setup:
+
+    > FindValidMoves
+
+    Enter number of pieces: 2
+
+    Piece 1
+    Enter colour (W/B): W
+    Enter type (B/N/P): P
+    Enter position: e4
+
+    Piece 2
+    Enter colour (W/B): B
+    Enter type (B/N/P): N
+    Enter position: c5
+
+    Valid moves
+    White P on e4: [e5]
+    Black N on c5: [a4, a6, b3, b7, d3, d7, e4, e6]
+
+    Continue (Y/N)?: Y
+
+    Enter number of pieces: 3
+
+    Piece 1
+    Enter colour (W/B): B
+    Enter type (B/N/P): P
+    Enter position: g7
+
+    Piece 2
+    Enter colour (W/B): W
+    Enter type (B/N/P): P
+    Enter position: h6
+
+    Piece 3
+    Enter colour (W/B): B
+    Enter type (N/P): P
+    Enter position: h7
+
+    Valid moves
+    Black P on g7: [g5, g6, h6]
+    White P on h6: [g7]
+    Black P on h7: []
+
+    Continue (Y/N)?: Y
+
+    Enter number of pieces: 3
+
+    Piece 1
+    Enter colour (W/B): W
+    Enter type (B/N/P): P
+    Enter position: f8
+
+    Pawns may not be placed on the first or last ranks.  Please re-enter.
+
+    Piece 1
+    Enter colour (W/B): W
+    Enter type (B/N/P): P
+    Enter position: f7
+
+    Piece 2
+    Enter colour (W/B): B
+    Enter type (B/N/P): N
+    Enter position: e8
+
+    Piece 3
+    Enter colour (W/B): B
+    Enter type (B/N/P): P
+    Enter position: g7
+
+    Valid moves
+    White P on f7: [e8, f8]
+    Black N on e8: [c7, d6, f6]
+    Black P on g7: [g5, g6]
+
+    Continue (Y/N)?: Y
+
+    Enter number of pieces: 3
+
+    Piece 1
+    Enter colour (W/B): W
+    Enter type (B/N/P): B
+    Enter position: c2
+
+    Piece 2
+    Enter colour (W/B): B
+    Enter type (B/N/P): P
+    Enter position: d3
+
+    Piece 3
+    Enter colour (W/B): B
+    Enter type (B/N/P): N
+    Enter position: b4
+
+    Valid moves
+    White B on c2: [a4, b1, b3, d1, d3]
+    Black P on d3: [c2, d2]
+    Black N on b4: [a2, a6, c2, c6, d5]
+
+    Continue (Y/N)?: N
+
+You have 24 hours to work on your solution.  You may submit a partial solution if you find yourself short of time.  Our email systems filter out JAR and ZIP files attachments, so we ask that solutions be uploaded to a cloud storage service such as Dropbox or Google Drive and shared so we can access them.  Please send an email with the relevant URL to codesubmissions@tyro.com with the subject line "Programming problem submission".  The solution should be an archive file that includes all source code written (including tests if relevant).  Any special system requirements or notes should also be noted either in the email or in a text file within the file.
+
+Please provide your solution in Java, unless prior agreement has been obtained to use a different programming language.
+
+You must work on this alone.  Obviously we cannot enforce this and are relying on your own sense of professionalism here.  Anyone who "fools" us with someone else's work would be found out very quickly if they did manage to find their way onto our team. 
+
+Questions can also be mailed to this address, though it should be noted that only clarifications of the problem will be given - no hints will be provided.
+
+Submissions will be judged on correctness as well as the understandability and quality of the code and design.  Good luck!
